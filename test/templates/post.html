@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>psmandrik</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="static/style.css" media="screen"/>
+</head>
+<body>
+<div class="main">
+  <div class="top"></div>
+  <h1><a href="#">Пётр Сергеевич Мандрик</a></h1>
+  <h2>живётъ</h2>
+  <div class="space"></div>
+  <div class="navlist">
+    <ul>
+      {% for group in blog.groups %}
+        <li><a href="#">{{ group }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="space"></div>
+  <div class="content">
+    <div class="post">
+      <a href="{{ post.prev.link }}">до этого {{ post.prev.title }}</a>, <a href="{{ post.next.link }}">а потом {{ post.next.title }}</a>
+      <div class="posttitle">{{ post.title }}</div>
+      <div class="date">{{ post.date }}</div>
+      {{ post.data }}
+      {% for photo in post.photos %}
+        {{ photo }}
+      {% endfor %}
+    </div>
+  <div class="clear"></div>
+  <div class="footer"> &copy;2024 pmandrik | Template by <a href="http://krneky.com/">Krneky</a> </div>
+</div>
+</body>
+</html>

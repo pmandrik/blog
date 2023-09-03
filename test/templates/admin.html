@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<script src="static/tinymce/tinymce.min.js"></script>
+<script>
+  function AddHashtag( value ){
+    let container = document.querySelector('.tag-container');
+    var text = document.createTextNode(value);
+    var p = document.createElement('p');
+    container.appendChild(p);
+    p.appendChild(text);
+    p.classList.add('tag');
+    p.addEventListener('click', () => {
+        container.removeChild( p );
+      });
+  };
+
+  function PostData() {
+  
+    let hashtags = []
+    let tags = document.querySelectorAll('.tag');
+    for(let i = 0; i < tags.length; i++) {
+      hashtags.push( tags[i].innerHTML );
+    }
+
+    let body = { "mytextarea" : document.getElementById("mytextarea").value, 
+                 "postStatus" : document.getElementById("postStatus").value,
+                 "postGroup" : document.getElementById("postGroup").value,
+                 "postStart" : document.getElementById("postStart").value,
+                 "postEnd" : document.getElementById("postEnd").value,
+                 "hashtags" : hashtags
+               };
+                 
+                 
+    console.log( body );
+    let msg = { "method": 'POST', 
+                "headers": {"Content-Type": "application/json"},
+                "body": JSON.stringify(body) 
+              };
+    fetch('postData', msg).then(response => response.json()).then(response => console.log(JSON.stringify(response)));
+  }
+
+  tinymce.init({
+    selector: '#mytextarea',
+    plugins: 'preview media code save codesample image',
+    toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | preview media code codesample image save',
+    images_upload_url: 'postImage',
+    automatic_uploads: true,
+    save_onsavecallback: function () { PostData(); }
+  });
+</script>
+    
+
+<head>
+<title>psmandrik</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="static/style.css" media="screen"/>
+</head>
+<body>
+<div class="main">
+  <div class="top"></div>
+  <h1><a href="#">Пётр Сергеевич Мандрик</a></h1>
+  <h2>живётъ</h2>
+  <div class="space"></div>
+  <div class="navlist">
+    <ul>
+      {% for group in blog.groups %}
+        <li><a href="#">{{ group }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="space"></div>
+  <div class="content">
+  
+      <select id="postStatus">
+        <option value="">--post status</option>
+        <option value="скрыт">скрыт</option>
+        <option value="виден">виден</option>
+      </select>
+      <select id="postGroup">
+        <option value="">--post group</option>
+        {% for group in blog.groups %}
+          <option value="{{ group }}">{{ group }}</option>
+        {% endfor %}
+      </select>
+      
+      Начало: <input type="date" id="postStart" value="{{ post.date }}" min="2010-01-01" />
+      конец: <input type="date" id="postEnd" value="{{ post.date }}" min="2010-01-01" />
+
+      <select id="postGroup">
+        <option value="">--post group</option>
+        {% for group in blog.groups %}
+          <option value="{{ group }}">{{ group }}</option>
+        {% endfor %}
+      </select>
+      
+    <p></p>
+    Добавь hashtags:
+    <input type="text" id="hashtags" autocomplete="off">
+    <div class="tag-container">
+    </div>
+
+    <div class="post">
+      <form method="post">
+        <textarea id="mytextarea">Hello, World!</textarea>
+      </form>
+    </div>
+  <div class="clear"></div>
+  <div class="footer"> &copy;2024 pmandrik | Template by <a href="http://krneky.com/">Krneky</a> </div>
+</div>
+</body>
+
+<script>
+  let input = document.querySelector('#hashtags');
+  input.addEventListener('keyup', () => {
+      if (event.which == 13 && input.value.length > 0) {
+        AddHashtag( input.value );
+        input.value = '';
+      }
+  });
+  
+  {% for tag in post.hashtags %}
+    AddHashtag( "{{ tag }}" );
+  {% endfor %}
+</script>
+
+</html>
+
+
+
+
+
+
+

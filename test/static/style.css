@@ -1,0 +1,174 @@
+/*
+Theme Name: Pure
+Theme URI: http://krneky.com/
+Description: Simple, one column theme.
+Version: 1.0
+Author: Robbie
+Author URI: http://krneky.com/
+*/
+
+body {
+	background: #f6f6f6;
+	color: #555;
+	font-size: 12px;
+	font-family: Sans-Serif,Verdana, Arial, SunSans-Regular;
+	margin: 0px;
+	padding: 0px;
+}
+
+a {
+	color: 	#707070;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #888888;
+	text-decoration: underline;
+}
+
+.top {
+	background-color: #EEE;
+	width: auto;
+	height: 17px;
+}
+
+.space {padding-top:10px;}
+
+h1 {
+	font: 17px verdana;
+	color: #579;
+	margin: 5px;
+	padding-left:7px;
+}
+
+h2 {
+	font-size: 11px;
+	color: #787878;
+	margin: 9px;
+	padding-left:12px;
+}
+
+.main {
+	width: 802px;
+	background: #fff;
+	padding: 0;
+	margin: 0 auto;
+
+}
+
+.content {
+	width: 740px;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.navlist {
+	padding: 0 0 9px 9px;
+	background-color: #f2f2f2;
+	padding-top: 3px;
+	text-align: left;
+}
+
+.navlist ul, .navlist li {
+	margin: 0;
+	padding: 0;
+	display: inline;
+	list-style-type: none;
+}
+
+.navlist a:link, .navlist a:visited {
+	line-height: 14px;
+	font-weight: bold;
+	margin: 0 10px 4px 10px;
+	text-decoration: none;
+	border-bottom: 2px solid #ddd;
+	padding-bottom: 1px;
+}
+
+.navlist a:link#current, .navlist a:visited#current, .navlist a:hover {
+	border-bottom: 2px solid #d1d1d1;
+	padding-bottom: 1px;
+	background: transparent;
+}
+
+
+.post {
+	width: 745px;
+}
+
+.posttitle {
+	font: 17px verdana;
+	color: #579;
+	margin: 5px;
+}
+
+.date {
+	font-size: 10px;
+	margin-left: 16px;
+}
+
+.img {
+	float: left;
+	padding-right: 5px;
+	padding-bottom: 5px;
+}
+
+.right {
+	float: right;
+	padding-top: 10px;
+	padding-right: 15px;
+}
+
+
+.info {
+	font-family: 'Verdana', 'Arial', Sans-Serif; 
+	font-size: 1em; 
+	background: #F5F5F5;
+	border: 1px solid #E3E4E4;
+	text-align: right;
+   	padding: 5px 10px 5px 0px;
+
+}
+
+.clear {
+	clear:both;
+	padding-top: 15px;
+}
+
+li {padding-top: 5px;}
+
+.footer {
+	border-top: 1px solid #e4e4e4;
+	margin: 25px auto 0px auto;
+	padding: 5px 0 6px 0;
+	text-align: center;
+	width: 500px;
+	font-size: 10px;
+}
+
+.tag-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.tag {
+  pointer-events: none;
+  background-color: #f6f6f6;
+  color: #707070;
+  padding: 1px;
+  margin: 5px;
+}
+
+.tag::before {
+  pointer-events: all;
+  display: inline-block;
+  content: 'x';  
+  height: 20px;
+  width: 20px;
+  margin-right: 6px;
+  text-align: center;
+  color: #707070;
+  background-color: #f6f6f6;
+  cursor: pointer;
+}
