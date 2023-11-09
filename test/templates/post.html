@@ -7,30 +7,31 @@
 </head>
 <body>
 <div class="main">
-  <div class="top"></div>
-  <h1><a href="#">Пётр Сергеевич Мандрик</a></h1>
-  <h2>живётъ</h2>
-  <div class="space"></div>
-  <div class="navlist">
-    <ul>
-      {% for group in blog.groups %}
-        <li><a href="#">{{ group }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="space"></div>
+  {% include 'header.html' %}
   <div class="content">
     <div class="post">
-      <a href="{{ post.prev.link }}">до этого {{ post.prev.title }}</a>, <a href="{{ post.next.link }}">а потом {{ post.next.title }}</a>
+      <a href="{{ post.prev.link }}">до этого "{{ post.prev.title }}"</a>
+      <a href="{{ post.next.link }}" style="float:right">а потом "{{ post.next.title }}"</a>
+      <div class="posttitle"> {% if post.postStatus == "скрыт" %} СОКРЫТ ... {% endif %} </div>
       <div class="posttitle">{{ post.title }}</div>
-      <div class="date">{{ post.date }}</div>
-      {{ post.data }}
-      {% for photo in post.photos %}
-        {{ photo }}
+      {{ post.data|safe }}
+      
+      <div class="tag-container">
+      {% for hashtag in post.hashtags %}
+        <p class="tag2"> <a href="{{ hashtag.link }}"> {{ hashtag.name }} </a> </p>
       {% endfor %}
+      </div>
+      
+      <div class="date" align="right">записано {{ post.dateCreated }}</div>
+      {% if post.dateUpdated %} 
+        <div class="date" align="right">обновлено {{ post.dateUpdated }}</div>
+      {% endif %} 
+      
+      {% if blog.has_user %} 
+        <div class="date" align="right"> <a href="/edit?id={{ post.id }}"> править </a> </div>
+      {% endif %} 
     </div>
-  <div class="clear"></div>
-  <div class="footer"> &copy;2024 pmandrik | Template by <a href="http://krneky.com/">Krneky</a> </div>
+  {% include 'footer.html' %}
 </div>
 </body>
 </html>

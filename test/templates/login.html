@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<script>
+  function loginClick( value ){
+    let user = document.getElementById('username').value;
+    let pass = document.getElementById('password').value;
+    
+    let body = { "user" : user, 
+                 "pass" : pass 
+                 };
+    
+    let msg = { "method": 'POST', 
+                "redirect": 'follow',
+                "headers": {"Content-Type": "application/json"},
+                "body": JSON.stringify(body) 
+              };
+    
+    fetch('login', msg).then(response => {
+      if (response) {
+        let text = response.text()
+        text.then( value => {
+          document.getElementById('flash1').innerHTML = value; 
+          document.getElementById('flash2').innerHTML = value; 
+          } 
+        )
+      }
+    }).catch();
+  };
+</script>
+
+<head>
+<title>psmandrik</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="static/style.css" media="screen"/>
+</head>
+<body>
+<div class="main">
+  {% include 'header.html' %}
+  <div id="flash1" style="text-align: center;"></div>
+  <div class="login">
+    <input type="text" placeholder="имя" id="username">  
+    <input type="password" placeholder="фамилия" id="password">  
+    <input type="submit" value="войти" onclick="loginClick();">
+  </div>
+  <div class="clear"></div>
+  <div id="flash2" style="text-align: center;"></div>
+  
+  {% include 'footer.html' %}
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>psmandrik</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="static/style.css" media="screen"/>
+</head>
+<body>
+<div class="main">
+  {% include 'header.html' %}
+  <div class="content">
+      Отобрано {{ other.postFilter }}, заглянуть <a href="/list">во всё</a>
+      <div class="clear"></div>
+      <div style="text-align:left;" class="pagination">
+        <a href="/list?{{ other.filtersRaw }}&page={{ other.pagePrev }}">&laquo;</a>
+        {% for pageIndex in other.pages %}
+          {% if pageIndex == other.page %}
+            <a class="active" href="/list?{{ other.filtersRaw }}&page={{ pageIndex }}">{{ pageIndex }}</a>
+          {% else %}
+            <a href="/list?{{ other.filtersRaw }}&page={{ pageIndex }}">{{ pageIndex }}</a>
+          {% endif %}
+        {% endfor %}
+        <a href="/list?{{ other.filtersRaw }}&page={{ other.pageNext }}">&raquo;</a>
+      </div>
+      
+      <table id="postListTable">
+      {% for post in posts %}
+        <tr class=""> 
+        <td class=""> {{ post.id }} </td>
+        <td class=""> {{ post.dateCreated }} </td>
+        <td class=""> <a href="{{ post.link }}"> {{ post.title }} ( {{ post.postStart }} -> {{ post.postEnd }} ) </a> </td>
+        <td class=""> <a href="/list?group={{ post.postGroup }}"> {{ post.postGroup }}</a> </td>
+        <!-- 
+        <td class=""> 
+          {% for hashtag in post.hashtags %}
+            <p class="tag2"> <a href="{{ hashtag.link }}"> {{ hashtag.name }} </a> </p>
+          {% endfor %}
+        </td>
+        -->
+        </tr>
+      {% endfor %}
+      </table>
+      
+      <div style="text-align:left;" class="pagination">
+        <a href="/list?{{ other.filtersRaw }}&page={{ other.pagePrev }}">&laquo;</a>
+        {% for pageIndex in other.pages %}
+          {% if pageIndex == other.page %}
+            <a class="active" href="/list?{{ other.filtersRaw }}&page={{ pageIndex }}">{{ pageIndex }}</a>
+          {% else %}
+            <a href="/list?{{ other.filtersRaw }}&page={{ pageIndex }}">{{ pageIndex }}</a>
+          {% endif %}
+        {% endfor %}
+        <a href="/list?{{ other.filtersRaw }}&page={{ other.pageNext }}">&raquo;</a>
+      </div>
+</div>
+  </div>
+  {% include 'footer.html' %}
+</div>
+</body>
+</html>

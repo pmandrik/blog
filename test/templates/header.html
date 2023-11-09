@@ -1,0 +1,18 @@
+  <div class="top"></div>
+  <h1><a href="/">Пётр Сергеевич Мандрик</a></h1>
+  <h2>
+    <a href="/edit">живётъ</a>
+    {% if blog.has_user %}
+      <a href="/list?secret=secret" style="margin-left: 20px;">сокрытое</a>
+      <a href="/logout" style="margin-left: 20px;">выживаетъ</a>
+    {% endif %}
+  </h2>
+  <div class="space"></div>
+  <div class="navlist">
+    <ul>
+      {% for group in blog.groups %}
+        <li><a href="/list?group={{ group }}">{{ group }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="space"></div>

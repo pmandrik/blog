@@ -23,7 +23,9 @@
       hashtags.push( tags[i].innerHTML );
     }
 
-    let body = { "mytextarea" : document.getElementById("mytextarea").value, 
+    let body = { "postId" : document.getElementById("postId").innerHTML, 
+                 "title" : document.getElementById("title").value, 
+                 "mytextarea" : document.getElementById("mytextarea").value, 
                  "postStatus" : document.getElementById("postStatus").value,
                  "postGroup" : document.getElementById("postGroup").value,
                  "postStart" : document.getElementById("postStart").value,
@@ -37,7 +39,21 @@
                 "headers": {"Content-Type": "application/json"},
                 "body": JSON.stringify(body) 
               };
-    fetch('postData', msg).then(response => response.json()).then(response => console.log(JSON.stringify(response)));
+    fetch('postData', msg).then(response => response.json()).then(
+      response => {
+        console.log(JSON.stringify(response));
+        if(response.hasOwnProperty("id")) {
+          document.getElementById('postId').innerHTML = response["id"]; 
+          document.getElementById('postLink').innerHTML = response["link"]; 
+          document.getElementById('postLink').href = response["link"]; 
+        }
+        if(response.hasOwnProperty("status")) {
+          if( response["status"] == "not ok" ){
+            document.getElementById('postLink').innerHTML = response["error"]; 
+          }
+        }
+      }
+    );
   }
 
   tinymce.init({
@@ -48,6 +64,20 @@
     automatic_uploads: true,
     save_onsavecallback: function () { PostData(); }
   });
+  
+  function onLoad(){
+    if( {{ post.id }} != "NEW" ){
+      document.getElementById("postGroup").value = "{{ post.postGroup }}";
+      document.getElementById("postStatus").value = "{{ post.postStatus }}";
+      document.getElementById("postStart").value = "{{ post.postStart }}";
+      document.getElementById("postEnd").value = "{{ post.postEnd }}";
+      document.getElementById("title").value = "{{ post.title }}";
+    }
+  };
+  
+  window.onload = function() {
+    onLoad();
+  };
 </script>
     
 
@@ -58,20 +88,9 @@
 </head>
 <body>
 <div class="main">
-  <div class="top"></div>
-  <h1><a href="#">Пётр Сергеевич Мандрик</a></h1>
-  <h2>живётъ</h2>
-  <div class="space"></div>
-  <div class="navlist">
-    <ul>
-      {% for group in blog.groups %}
-        <li><a href="#">{{ group }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="space"></div>
+  {% include 'header.html' %}
   <div class="content">
-  
+      <h3> id: <b id="postId">{{ post.id }}</b> link: <a href="{{ post.link }}" id="postLink"> {{ post.link }} </a> </h3>
       <select id="postStatus">
         <option value="">--post status</option>
         <option value="скрыт">скрыт</option>
@@ -86,27 +105,20 @@
       
       Начало: <input type="date" id="postStart" value="{{ post.date }}" min="2010-01-01" />
       конец: <input type="date" id="postEnd" value="{{ post.date }}" min="2010-01-01" />
-
-      <select id="postGroup">
-        <option value="">--post group</option>
-        {% for group in blog.groups %}
-          <option value="{{ group }}">{{ group }}</option>
-        {% endfor %}
-      </select>
-      
     <p></p>
+    Назови:
+    <input type="text" id="title" autocomplete="off">
     Добавь hashtags:
     <input type="text" id="hashtags" autocomplete="off">
-    <div class="tag-container">
-    </div>
+    <div class="tag-container"></div>
+    <p></p>
 
     <div class="post">
       <form method="post">
-        <textarea id="mytextarea">Hello, World!</textarea>
+        <textarea id="mytextarea">{{ post.data }}</textarea>
       </form>
     </div>
-  <div class="clear"></div>
-  <div class="footer"> &copy;2024 pmandrik | Template by <a href="http://krneky.com/">Krneky</a> </div>
+  {% include 'footer.html' %}
 </div>
 </body>
 
@@ -120,7 +132,7 @@
   });
   
   {% for tag in post.hashtags %}
-    AddHashtag( "{{ tag }}" );
+    AddHashtag( "{{ tag.name }}" );
   {% endfor %}
 </script>
 
